@@ -18,6 +18,7 @@ import reactor.core.publisher.Mono;
 @Component
 @Slf4j
 public class AuthorizeFilter implements Ordered, GlobalFilter {
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         //1.获取request和response对象
@@ -25,17 +26,16 @@ public class AuthorizeFilter implements Ordered, GlobalFilter {
         ServerHttpResponse response = exchange.getResponse();
 
         //2.判断是否是登录
-        if(request.getURI().getPath().contains("/login")){
+        if (request.getURI().getPath().contains("/login")) {
             //放行
             return chain.filter(exchange);
         }
-
 
         //3.获取token
         String token = request.getHeaders().getFirst("token");
 
         //4.判断token是否存在
-        if(StringUtils.isBlank(token)){
+        if (StringUtils.isBlank(token)) {
             response.setStatusCode(HttpStatus.UNAUTHORIZED);
             return response.setComplete();
         }
@@ -45,11 +45,11 @@ public class AuthorizeFilter implements Ordered, GlobalFilter {
             Claims claimsBody = AppJwtUtil.getClaimsBody(token);
             //是否是过期
             int result = AppJwtUtil.verifyToken(claimsBody);
-            if(result == 1 || result  == 2){
+            if (result == 1 || result == 2) {
                 response.setStatusCode(HttpStatus.UNAUTHORIZED);
                 return response.setComplete();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             response.setStatusCode(HttpStatus.UNAUTHORIZED);
             return response.setComplete();
@@ -61,7 +61,8 @@ public class AuthorizeFilter implements Ordered, GlobalFilter {
 
     /**
      * 优先级设置  值越小  优先级越高
-     * @return
+     *
+     * @return 优先级
      */
     @Override
     public int getOrder() {
