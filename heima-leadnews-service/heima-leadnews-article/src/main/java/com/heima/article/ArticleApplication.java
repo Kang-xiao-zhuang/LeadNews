@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Bean;
 public class ArticleApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ArticleApplication.class,args);
+        SpringApplication.run(ArticleApplication.class, args);
     }
 
     @Bean
