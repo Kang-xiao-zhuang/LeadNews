@@ -26,8 +26,8 @@ public class ApUserServiceImpl extends ServiceImpl<ApUserMapper, ApUser> impleme
     /**
      * app端登录功能
      *
-     * @param dto
-     * @return
+     * @param dto LoginDto
+     * @return ResponseResult
      */
     @Override
     public ResponseResult login(LoginDto dto) {
@@ -62,7 +62,5 @@ public class ApUserServiceImpl extends ServiceImpl<ApUserMapper, ApUser> impleme
             map.put("token", AppJwtUtil.getToken(0L));
             return ResponseResult.okResult(map);
         }
-
-
     }
 }
