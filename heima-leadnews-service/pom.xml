@@ -13,6 +13,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>heima-leadnews-user</module>
+        <module>heima-leadnews-article</module>
+        <module>heima-leadnews-wemedia</module>
     </modules>
 
     <properties>
