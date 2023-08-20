@@ -19,6 +19,7 @@ public class ArticleApplication {
         SpringApplication.run(ArticleApplication.class, args);
     }
 
+
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
