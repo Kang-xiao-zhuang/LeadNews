@@ -36,8 +36,8 @@ public class AppJwtUtil {
     /**
      * 获取token中的claims信息
      *
-     * @param token
-     * @return
+     * @param token String
+     * @return Jws
      */
     private static Jws<Claims> getJws(String token) {
         return Jwts.parser()
@@ -48,8 +48,8 @@ public class AppJwtUtil {
     /**
      * 获取payload body信息
      *
-     * @param token
-     * @return
+     * @param token String
+     * @return Claims
      */
     public static Claims getClaimsBody(String token) throws ExpiredJwtException {
         return getJws(token).getBody();
@@ -58,8 +58,8 @@ public class AppJwtUtil {
     /**
      * 获取hearder body信息
      *
-     * @param token
-     * @return
+     * @param token String
+     * @return JwsHeader
      */
     public static JwsHeader getHeaderBody(String token) {
         return getJws(token).getHeader();
@@ -68,7 +68,7 @@ public class AppJwtUtil {
     /**
      * 是否过期
      *
-     * @param claims
+     * @param claims Claims
      * @return -1：有效，0：有效，1：过期，2：过期
      */
     public static int verifyToken(Claims claims) throws Exception {
