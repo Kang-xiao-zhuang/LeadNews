@@ -22,13 +22,13 @@ public class WmUserServiceImpl extends ServiceImpl<WmUserMapper, WmUser> impleme
     @Override
     public ResponseResult login(WmLoginDto dto) {
         //1.检查参数
-        if(StringUtils.isBlank(dto.getName()) || StringUtils.isBlank(dto.getPassword())){
-            return ResponseResult.errorResult(AppHttpCodeEnum.PARAM_INVALID,"用户名或密码为空");
+        if (StringUtils.isBlank(dto.getName()) || StringUtils.isBlank(dto.getPassword())) {
+            return ResponseResult.errorResult(AppHttpCodeEnum.PARAM_INVALID, "用户名或密码为空");
         }
 
         //2.查询用户
         WmUser wmUser = getOne(Wrappers.<WmUser>lambdaQuery().eq(WmUser::getName, dto.getName()));
-        if(wmUser == null){
+        if (wmUser == null) {
             return ResponseResult.errorResult(AppHttpCodeEnum.DATA_NOT_EXIST);
         }
 
@@ -36,16 +36,15 @@ public class WmUserServiceImpl extends ServiceImpl<WmUserMapper, WmUser> impleme
         String salt = wmUser.getSalt();
         String pswd = dto.getPassword();
         pswd = DigestUtils.md5DigestAsHex((pswd + salt).getBytes());
-        if(pswd.equals(wmUser.getPassword())){
+        if (pswd.equals(wmUser.getPassword())) {
             //4.返回数据  jwt
-            Map<String,Object> map  = new HashMap<>();
+            Map<String, Object> map = new HashMap<>();
             map.put("token", AppJwtUtil.getToken(wmUser.getId().longValue()));
             wmUser.setSalt("");
             wmUser.setPassword("");
-            map.put("user",wmUser);
+            map.put("user", wmUser);
             return ResponseResult.okResult(map);
-
-        }else {
+        } else {
             return ResponseResult.errorResult(AppHttpCodeEnum.LOGIN_PASSWORD_ERROR);
         }
     }

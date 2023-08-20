@@ -8,9 +8,10 @@ public interface WmChannelService extends IService<WmChannel> {
 
     /**
      * 查询所有频道
-     * @return
+     *
+     * @return ResponseResult
      */
-    public ResponseResult findAll();
+    ResponseResult findAll();
 
 
 }

@@ -36,8 +36,8 @@ public class WmMaterialServiceImpl extends ServiceImpl<WmMaterialMapper, WmMater
     /**
      * 图片上传
      *
-     * @param multipartFile
-     * @return
+     * @param multipartFile MultipartFile
+     * @return ResponseResult
      */
     @Override
     public ResponseResult uploadPicture(MultipartFile multipartFile) {
@@ -72,15 +72,14 @@ public class WmMaterialServiceImpl extends ServiceImpl<WmMaterialMapper, WmMater
         save(wmMaterial);
 
         //4.返回结果
-
         return ResponseResult.okResult(wmMaterial);
     }
 
     /**
      * 素材列表查询
      *
-     * @param dto WmMaterialDto
-     * @return
+     * @param dto WmMaterialDto WmMaterialDto
+     * @return ResponseResult
      */
     @Override
     public ResponseResult findList(WmMaterialDto dto) {
@@ -101,7 +100,6 @@ public class WmMaterialServiceImpl extends ServiceImpl<WmMaterialMapper, WmMater
 
         //按照时间倒序
         lambdaQueryWrapper.orderByDesc(WmMaterial::getCreatedTime);
-
 
         page = page(page, lambdaQueryWrapper);
 

@@ -10,17 +10,19 @@ public interface WmMaterialService extends IService<WmMaterial> {
 
     /**
      * 图片上传
-     * @param multipartFile
-     * @return
+     *
+     * @param multipartFile MultipartFile
+     * @return ResponseResult
      */
-    public ResponseResult uploadPicture(MultipartFile multipartFile);
+    ResponseResult uploadPicture(MultipartFile multipartFile);
 
     /**
      * 素材列表查询
-     * @param dto
-     * @return
+     *
+     * @param dto WmMaterialDto
+     * @return ResponseResult
      */
-    public ResponseResult findList( WmMaterialDto dto);
+    ResponseResult findList(WmMaterialDto dto);
 
 
 }

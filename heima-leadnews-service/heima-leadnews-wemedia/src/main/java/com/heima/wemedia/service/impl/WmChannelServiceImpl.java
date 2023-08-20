@@ -17,7 +17,8 @@ public class WmChannelServiceImpl extends ServiceImpl<WmChannelMapper, WmChannel
 
     /**
      * 查询所有频道
-     * @return
+     *
+     * @return ResponseResult
      */
     @Override
     public ResponseResult findAll() {

@@ -10,8 +10,8 @@ public interface WmUserService extends IService<WmUser> {
     /**
      * 自媒体端登录
      *
-     * @param dto
-     * @return
+     * @param dto WmLoginDto
+     * @return ResponseResult
      */
     ResponseResult login(WmLoginDto dto);
 

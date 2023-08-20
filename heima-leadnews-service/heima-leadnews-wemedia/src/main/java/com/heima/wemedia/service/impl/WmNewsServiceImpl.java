@@ -43,8 +43,8 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
     /**
      * 条件查询文章列表
      *
-     * @param dto
-     * @return
+     * @param dto WmNewsPageReqDto
+     * @return ResponseResult
      */
     @Override
     public ResponseResult findList(WmNewsPageReqDto dto) {
@@ -54,7 +54,7 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
 
         //2.分页条件查询
         IPage page = new Page(dto.getPage(), dto.getSize());
-        LambdaQueryWrapper<WmNews> lambdaQueryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<WmNews> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         //状态精确查询
         if (dto.getStatus() != null) {
             lambdaQueryWrapper.eq(WmNews::getStatus, dto.getStatus());
@@ -81,13 +81,11 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
         //按照发布时间倒序查询
         lambdaQueryWrapper.orderByDesc(WmNews::getPublishTime);
 
-
         page = page(page, lambdaQueryWrapper);
 
         //3.结果返回
         ResponseResult responseResult = new PageResponseResult(dto.getPage(), dto.getSize(), (int) page.getTotal());
         responseResult.setData(page.getRecords());
-
 
         return responseResult;
     }
@@ -164,7 +162,7 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
             if (materials.size() >= 3) {
                 wmNews.setType(WemediaConstants.WM_NEWS_MANY_IMAGE);
                 images = materials.stream().limit(3).collect(Collectors.toList());
-            } else if (materials.size() >= 1 && materials.size() < 3) {
+            } else if (materials.size() >= 1) {
                 //单图
                 wmNews.setType(WemediaConstants.WM_NEWS_SINGLE_IMAGE);
                 images = materials.stream().limit(1).collect(Collectors.toList());
@@ -203,9 +201,9 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
     /**
      * 保存文章图片与素材的关系到数据库中
      *
-     * @param materials
-     * @param newsId
-     * @param type
+     * @param materials List
+     * @param newsId    Integer
+     * @param type      Short
      */
     private void saveRelativeInfo(List<String> materials, Integer newsId, Short type) {
         if (materials != null && !materials.isEmpty()) {
@@ -233,8 +231,8 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
     /**
      * 提取文章内容中的图片信息
      *
-     * @param content
-     * @return
+     * @param content String
+     * @return List
      */
     private List<String> ectractUrlInfo(String content) {
         List<String> materials = new ArrayList<>();
@@ -256,7 +254,7 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
     /**
      * 保存或修改文章
      *
-     * @param wmNews
+     * @param wmNews WmNews
      */
     private void saveOrUpdateWmNews(WmNews wmNews) {
         //补全属性
@@ -275,6 +273,5 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
             updateById(wmNews);
         }
     }
-
 
 }
